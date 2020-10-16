@@ -137,8 +137,25 @@ cv::Mat resize_img(cv::Mat src, int short_size)
 {
     int w = src.cols;
     int h = src.rows;
+    
     if (short_size == 0)
+    {
+        int long_size = w > h ? w : h;
         short_size = w > h ? h : w;
+
+        
+
+        if(long_size/short_size >10)
+        {
+            short_size = (short_size / 32 - long_size / short_size/1.5) * 32;
+        }
+
+        if (short_size < 96)
+            short_size = 96;
+        else
+            short_size = 32 * ((short_size / 32) + 1);
+    }
+    printf(" short_size: %d, origine size: %d * %d \n", short_size, w, h);
 
     //int nMax = w > h ? w : h;
 
